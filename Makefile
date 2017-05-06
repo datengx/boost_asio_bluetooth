@@ -1,4 +1,5 @@
-TARGETS=concurrent nonconcurrent unblocked poll multithreads ioservicebind
+TARGETS=concurrent nonconcurrent unblocked poll multithreads ioservicebind \
+        dispatch connectAsync serverAsync
 
 INC=$(shell pkg-config --cflags boost)
 
@@ -34,4 +35,16 @@ multithreads:
 
 ioservicebind:
 		g++ -Wall -ansi -std=c++11 $(INC) ioservicebind.cpp -o ioservicebind $(LIBS)
+		mv $@ ./bin
+
+dispatch:
+		g++ -Wall -ansi -std=c++11 $(INC) dispatch.cpp -o dispatch $(LIBS)
+		mv $@ ./bin
+
+connectAsync:
+		g++ -Wall -ansi -std=c++11 $(INC) connectAsync.cpp -o connectAsync $(LIBS)
+		mv $@ ./bin
+
+serverAsync:
+		g++ -Wall -ansi -std=c++11 $(INC) serverAsync.cpp -o serverAsync $(LIBS)
 		mv $@ ./bin

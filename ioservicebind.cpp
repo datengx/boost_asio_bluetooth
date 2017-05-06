@@ -11,7 +11,9 @@ void WorkerThread(boost::shared_ptr<boost::asio::io_service> iosvc, int counter)
   global_stream_lock.lock();
   std::cout << counter << ".\n";
   global_stream_lock.unlock();
+
   iosvc->run();
+  
   global_stream_lock.lock();
   std::cout << "End.\n";
   global_stream_lock.unlock();
