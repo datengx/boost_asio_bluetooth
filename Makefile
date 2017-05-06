@@ -1,9 +1,25 @@
 TARGETS=concurrent nonconcurrent unblocked poll multithreads ioservicebind \
         dispatch connectAsync serverAsync
 
-INC=$(shell pkg-config --cflags boost)
+INC=$(shell pkg-config --cflags boost) \
+		-I/asio_bluetooth
 
+UNAME := $(shell uname)
 LIBS=$(shell pkg-config --libs boost)
+
+
+# On Linux (not OSX) needs to manually link to pthread
+ifeq ($(UNAME), Linux)
+SIMPLE_LIBS=-L/usr/lib/x86_64-linux-gnu  -lboost_system -lboost_thread -lpthread
+else ifeq($(UNAME), Darwin)
+SIMPLE_LIBS=$LIBS
+else
+# do nothing for now
+endif
+
+
+
+
 
 all: rm_dir mk_dir $(TARGETS)
 
@@ -42,9 +58,9 @@ dispatch:
 		mv $@ ./bin
 
 connectAsync:
-		g++ -Wall -ansi -std=c++11 $(INC) connectAsync.cpp -o connectAsync $(LIBS)
+		g++ -Wall -std=c++14 $(INC) connectAsync.cpp -o connectAsync $(SIMPLE_LIBS)
 		mv $@ ./bin
 
 serverAsync:
-		g++ -Wall -ansi -std=c++11 $(INC) serverAsync.cpp -o serverAsync $(LIBS)
+		g++ -Wall -std=c++14 $(INC) serverAsync.cpp -o serverAsync $(SIMPLE_LIBS)
 		mv $@ ./bin
