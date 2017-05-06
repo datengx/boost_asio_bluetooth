@@ -51,6 +51,10 @@ void OnConnect(const boost::system::error_code &ec) {
   }
 }
 
+/******************
+* Main function
+*******************/
+
 int main(void) {
   boost::shared_ptr<boost::asio::io_service> io_svc(
     new boost::asio::io_service
