@@ -156,7 +156,7 @@ void Acceptor::Listen(const std::string &mac_addr, const uint8_t & channel)
 	m_acceptor.open(endpoint.protocol());
 	//m_acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(false));
 	m_acceptor.bind(endpoint);
-	//m_acceptor.listen(boost::asio::socket_base::max_connections);
+	m_acceptor.listen(boost::asio::socket_base::max_connections);
 	StartTimer();
 }
 
@@ -167,7 +167,7 @@ void Acceptor::Listen()
 	m_acceptor.open(endpoint.protocol());
 	//m_acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(false));
 	m_acceptor.bind(endpoint);
-	//m_acceptor.listen(boost::asio::socket_base::max_connections);
+	m_acceptor.listen(boost::asio::socket_base::max_connections);
 	StartTimer();
 }
 
@@ -178,7 +178,7 @@ void Acceptor::Listen(uint8_t channel)
 	m_acceptor.open(endpoint.protocol());
 	//m_acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(false));
 	m_acceptor.bind(endpoint);
-	//m_acceptor.listen(boost::asio::socket_base::max_connections);
+	m_acceptor.listen(boost::asio::socket_base::max_connections);
 	StartTimer();
 }
 
