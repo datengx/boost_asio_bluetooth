@@ -129,7 +129,7 @@ int main(void) {
 
   boost::shared_ptr<MyAcceptor> acceptor(new MyAcceptor(hive));
   // Listen on connection from anyone
-  acceptor->Listen();
+  acceptor->Listen(13);
 
   boost::shared_ptr<MyConnection> connection(new MyConnection(hive));
   acceptor->Accept(connection);

@@ -129,6 +129,9 @@ public:
 	// Begin listening on any incoming bluetooth connection
 	void Listen();
 
+	// Listen on a specified channel
+	void Listen(uint8_t channel);
+
 	// Posts the connection to the listening interface. The next client that
 	// connections will be given this connection. If multiple calls to Accept
 	// are called at a time, then they are accepted in a FIFO order.

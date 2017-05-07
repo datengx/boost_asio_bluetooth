@@ -46,6 +46,16 @@ public:
     mac_ = "[BDADDR_ANY]";
   }
 
+  endpoint(uint8_t channel)
+    : data_()
+  {
+    data_.bt.rc_family = AF_BLUETOOTH;
+    data_.bt.rc_bdaddr = *BDADDR_ANY;
+    data_.bt.rc_channel = (uint8_t) channel;
+    // TODO can we figure out the BT mac of the local host?
+    mac_ = "[BDADDR_ANY]";
+  }
+
   // Construct endpoint using bt MAC address and channel number
   endpoint(const char* mac_addr, uint8_t channel)
     : data_()

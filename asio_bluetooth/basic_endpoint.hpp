@@ -33,6 +33,11 @@ public:
   {
   }
 
+  basic_endpoint(uint8_t channel)
+    : impl_(channel)
+  {
+  }
+
   basic_endpoint(const char* mac_addr, uint8_t channel)
     : impl_(mac_addr, channel)
   {

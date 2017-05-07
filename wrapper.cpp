@@ -171,6 +171,17 @@ void Acceptor::Listen()
 	StartTimer();
 }
 
+// Acceptor::Listen definition [default]
+void Acceptor::Listen(uint8_t channel)
+{
+	boost::asio::bluetooth::bluetooth::endpoint endpoint(channel);
+	m_acceptor.open(endpoint.protocol());
+	//m_acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(false));
+	m_acceptor.bind(endpoint);
+	//m_acceptor.listen(boost::asio::socket_base::max_connections);
+	StartTimer();
+}
+
 // Acceptor::GetHive definition
 boost::shared_ptr<Hive> Acceptor::GetHive()
 {
