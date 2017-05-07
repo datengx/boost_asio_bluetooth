@@ -1,4 +1,4 @@
-# boost_networking_bluetooth
+# boost_asio_bluetooth
 This project extend the Boost ASIO functionality by adding bluetooth connection. More specifically, a `bluetooth` protocol class was added along with a bluetooth `endpoint` implementation. For more information regarding adding other types of protocol to the Boost ASIO library, check [this](http://www.boost.org/doc/libs/1_64_0/doc/html/boost_asio/overview/networking/other_protocols.html) link.
 
 A simple, extensible echo server to demonstrate the Bluetooth communication is also included in the project.
@@ -36,3 +36,5 @@ Then on the other computer, do
 ./bin/echoclient
 ```
 in the project root directory.
+
+You will see "Hello World!" sent to the server and echoed back to the client.
