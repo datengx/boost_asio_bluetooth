@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 
+#include "./asio_bluetooth/bluetooth.hpp"
+
 boost::mutex global_stream_lock;
 
 void WorkerThread(boost::shared_ptr<boost::asio::io_service> iosvc, int counter) {
@@ -76,17 +78,23 @@ int main(void) {
   for(int i=1; i<=2; i++)
     threads.create_thread(boost::bind(&WorkerThread, io_svc, i));
 
-  boost::shared_ptr<boost::asio::ip::tcp::socket> sckt(
-    new boost::asio::ip::tcp::socket(*io_svc)
+  //boost::shared_ptr<boost::asio::ip::tcp::socket> sckt(
+  //  new boost::asio::ip::tcp::socket(*io_svc)
+  //);
+
+  boost::shared_ptr< boost::asio::bluetooth::bluetooth::socket > sckt(
+    new boost::asio::bluetooth::bluetooth::socket(*io_svc)
   );
 
   try {
-    boost::asio::ip::tcp::resolver resolver(*io_svc);
-    boost::asio::ip::tcp::resolver::query query("127.0.0.1",
-      boost::lexical_cast<std::string>(4444)
-    );
-    boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve( query );
-    boost::asio::ip::tcp::endpoint endpoint = *iterator;
+    //boost::asio::ip::tcp::resolver resolver(*io_svc);
+    //boost::asio::ip::tcp::resolver::query query("127.0.0.1",
+    //  boost::lexical_cast<std::string>(4444)
+    //);
+    //boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve( query );
+    //boost::asio::ip::tcp::endpoint endpoint = *iterator;
+    std::string dest = "60:57:18:7E:77:68";
+    boost::asio::bluetooth::bluetooth::endpoint endpoint(dest, 1);
 
     global_stream_lock.lock();
     std::cout << "Connecting to: " << endpoint << std::endl;

@@ -8,6 +8,9 @@
 #include <iostream>
 #include <string>
 
+// Bluetooth header
+#include "./asio_bluetooth/bluetooth.hpp"
+
 boost::mutex global_stream_lock;
 
 void WorkerThread(boost::shared_ptr<boost::asio::io_service> iosvc, int counter) {
@@ -72,26 +75,43 @@ int main(void) {
   for(int i=1; i<=2; i++)
     threads.create_thread(boost::bind(&WorkerThread, io_svc, i));
 
-  boost::shared_ptr< boost::asio::ip::tcp::acceptor > acceptor(
-    new boost::asio::ip::tcp::acceptor(*io_svc)
+  //boost::shared_ptr< boost::asio::ip::tcp::acceptor > acceptor(
+  //  new boost::asio::ip::tcp::acceptor(*io_svc)
+  //);
+
+  //boost::shared_ptr<boost::asio::ip::tcp::socket> sckt(
+  //  new boost::asio::ip::tcp::socket(*io_svc)
+  //);
+
+  boost::shared_ptr< boost::asio::bluetooth::bluetooth::acceptor > acceptor(
+    new boost::asio::bluetooth::bluetooth::acceptor(*io_svc)
   );
 
-  boost::shared_ptr<boost::asio::ip::tcp::socket> sckt(
-    new boost::asio::ip::tcp::socket(*io_svc)
+  boost::shared_ptr< boost::asio::bluetooth::bluetooth::socket > sckt(
+    new boost::asio::bluetooth::bluetooth::socket(*io_svc)
   );
+
 
   try {
-    boost::asio::ip::tcp::resolver resolver(*io_svc);
-    boost::asio::ip::tcp::resolver::query query(
-      "127.0.0.1",
-      boost::lexical_cast<std::string>(4444)
-    );
-    boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(query);
+    // resolve IP address based on the domain name
+    //boost::asio::ip::tcp::resolver resolver(*io_svc);
+    //boost::asio::ip::tcp::resolver::query query(
+    //  "127.0.0.1",
+    //  boost::lexical_cast<std::string>(4444)
+    //);
+    //boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(query);
+    std::cout << "-- Creating endpoint --" << std::endl;
+    boost::asio::bluetooth::bluetooth::endpoint endpoint;
+
+    std::cout << "-- Openning Acceptor --" << std::endl;
     acceptor->open(endpoint.protocol());
-    acceptor->set_option(
-      boost::asio::ip::tcp::acceptor::reuse_address(false));
+    //acceptor->set_option(
+    //  boost::asio::ip::tcp::acceptor::reuse_address(false));
+    std::cout << "-- Binding Endpoint --" << std::endl;
     acceptor->bind(endpoint);
+    std::cout << "-- Setting Listening --" << std::endl;
     acceptor->listen(boost::asio::socket_base::max_connections);
+    std::cout << "-- Async Accepting --" << std::endl;
     acceptor->async_accept(*sckt, boost::bind(OnAccept, _1));
 
     global_stream_lock.lock();

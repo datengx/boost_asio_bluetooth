@@ -8,7 +8,6 @@
 #ifndef BOOST_ASIO_BLUETOOTH_HPP
 #define BOOST_ASIO_BLUETOOTH_HPP
 
-#include <boost/asio/detail/push_options.hpp>
 
 #include <boost/asio/basic_socket_acceptor.hpp>
 #include <boost/asio/socket_acceptor_service.hpp>
@@ -21,6 +20,9 @@
 
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
+
+
+#include <boost/asio/detail/push_options.hpp>
 
 namespace boost {
 namespace asio {
@@ -35,7 +37,7 @@ class bluetooth
 {
 public:
   // Construct with a specific family
-  explicit bluetooth()
+  bluetooth()
   {
   }
 
@@ -63,7 +65,7 @@ public:
   }
 
   // The Bluetooth endpoint type
-  typedef basic_endpoint<bluetooth> endpoint;
+  typedef boost::asio::bluetooth::basic_endpoint<bluetooth> endpoint;
 
   // The Bluetooth socket type.
   typedef basic_stream_socket<bluetooth> socket;

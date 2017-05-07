@@ -52,9 +52,8 @@ public:
 #if defined(BOOST_ASIO_HAS_MOVE)
   /// Move constructor
   basic_endpoint(basic_endpoint&& other)
+    : impl_(other.impl_)
   {
-    impl_ = other.impl_;
-    return *this;
   }
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
@@ -107,7 +106,7 @@ public:
   // Get the capacity of the endpoint in the native type
   std::size_t capacity() const
   {
-    return impl_.capacity()
+    return impl_.capacity();
   }
 
 private:
@@ -135,4 +134,5 @@ std::basic_ostream<Elem, Traits>& operator<<(
 
 
 #include <boost/asio/detail/pop_options.hpp>
+
 #endif

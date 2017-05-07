@@ -19,7 +19,11 @@
 
 // misc, type definitions
 #include "../misc.hpp"
-
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/rfcomm.h>
 
 #include <boost/asio/detail/push_options.hpp>
 
@@ -44,8 +48,10 @@ public:
   endpoint(const char* mac_addr, uint8_t channel)
     : data_()
   {
-    data_.bt.rc_family = AF_BLUETOOTH
-    memcpy(data_.bt.rc_bdaddr, mac_addr, 18);
+    data_.bt.rc_family = AF_BLUETOOTH;
+    char addr[18];
+    memcpy(addr, mac_addr, 18);
+    str2ba( addr, &data_.bt.rc_bdaddr );
     data_.bt.rc_channel = (uint8_t) channel;
   }
 
@@ -54,8 +60,10 @@ public:
     : data_()
   {
     data_.bt.rc_family = AF_BLUETOOTH;
-    memcpy(data_.bt.rc_bdaddr, mac_addr.c_str(), 17);
-    data_.bt.rc_bdaddr[17] = 0;
+    char addr[18];
+    memcpy(addr, mac_addr.c_str(), 17);
+    addr[17] = 0;
+    str2ba( addr, &data_.bt.rc_bdaddr );
     data_.bt.rc_channel = (uint8_t) channel;
   }
 
