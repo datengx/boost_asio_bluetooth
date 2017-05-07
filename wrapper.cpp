@@ -3,6 +3,7 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/interprocess/detail/atomic.hpp>
+#include <iostream>
 
 // Hive constructor
 Hive::Hive()
@@ -125,8 +126,10 @@ void Acceptor::HandleAccept(const boost::system::error_code &error, boost::share
 				connection->OnAccept(m_acceptor.local_endpoint().address(), m_acceptor.local_endpoint().channel());
 			}
 		}
-		else
+		else {
+			std::cout << "HandleAccept has error!" << std::endl;
 			StartError(error);
+		}
 	}
 }
 
@@ -270,8 +273,10 @@ void Connection::HandleConnect(const boost::system::error_code &error)
 	{
 		if(m_socket.is_open())
 			OnConnect( m_socket.remote_endpoint().address(), m_socket.remote_endpoint().channel() );
-		else
+		else {
+			std::cout << "Handle connect has error" << std::endl;
 			StartError( error );
+		}
 	}
 }
 
