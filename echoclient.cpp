@@ -102,7 +102,7 @@ int main(void) {
   boost::shared_ptr<Hive> hive(new Hive());
 
   boost::shared_ptr<MyConnection> connection(new MyConnection(hive));
-  connection->Connect("60:57:18:7E:77:68", 1);
+  connection->Connect("94:39:E5:8E:5A:A2", 1);
 
   while(1) {
     hive->Poll();

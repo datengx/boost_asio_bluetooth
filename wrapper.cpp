@@ -63,7 +63,7 @@ void Hive::Reset()
 
 // Acceptor constructor
 Acceptor::Acceptor(boost::shared_ptr<Hive> hive)
-: m_hive(hive), m_acceptor(hive->GetService()), m_io_strand(hive->GetService()), m_timer(hive->GetService()), m_timer_interval(5000), m_error_state(0)
+: m_hive(hive), m_acceptor(hive->GetService()), m_io_strand(hive->GetService()), m_timer(hive->GetService()), m_timer_interval(1000), m_error_state(0)
 {
 }
 
@@ -115,11 +115,15 @@ void Acceptor::HandleTimer(const boost::system::error_code &error)
 void Acceptor::HandleAccept(const boost::system::error_code &error, boost::shared_ptr<Connection> connection)
 {
 	if(error || HasError() || m_hive->HasStopped())
+	{
+		std::cout << "Acceptor::HandleAccept has error!" << std::endl;
 		connection->StartError(error);
+	}
 	else
 	{
 		if(connection->GetSocket().is_open())
 		{
+			std::cout << "Acceptor::HandleAccept succeed!" << std::endl;
 			connection->StartTimer();
 			if(OnAccept(connection, connection->GetSocket().remote_endpoint().address(), connection->GetSocket().remote_endpoint().channel()))
 			{
@@ -127,7 +131,7 @@ void Acceptor::HandleAccept(const boost::system::error_code &error, boost::share
 			}
 		}
 		else {
-			std::cout << "HandleAccept has error!" << std::endl;
+			std::cout << "Acceptor::HandleAccept has error!" << std::endl;
 			StartError(error);
 		}
 	}
@@ -199,7 +203,7 @@ bool Acceptor::HasError()
 
 // Connection constructor
 Connection::Connection(boost::shared_ptr<Hive> hive)
-: m_hive(hive), m_socket(hive->GetService()), m_io_strand(hive->GetService()), m_timer(hive->GetService()), m_receive_buffer_size(4096), m_timer_interval(5000), m_error_state(0)
+: m_hive(hive), m_socket(hive->GetService()), m_io_strand(hive->GetService()), m_timer(hive->GetService()), m_receive_buffer_size(4096), m_timer_interval(1000), m_error_state(0)
 {
 }
 
@@ -267,14 +271,17 @@ void Connection::StartError(const boost::system::error_code &error)
 // Connection::HandleConnect definition
 void Connection::HandleConnect(const boost::system::error_code &error)
 {
+	std::cout << "Connection::HandleConnect()" << std::endl;
 	if(error || HasError() || m_hive->HasStopped())
+	{
+		std::cout << "Handle connect has error" << std::endl;
 		StartError( error );
+	}
 	else
 	{
 		if(m_socket.is_open())
 			OnConnect( m_socket.remote_endpoint().address(), m_socket.remote_endpoint().channel() );
 		else {
-			std::cout << "Handle connect has error" << std::endl;
 			StartError( error );
 		}
 	}
@@ -283,8 +290,12 @@ void Connection::HandleConnect(const boost::system::error_code &error)
 // Connection::HandleSend definition
 void Connection::HandleSend(const boost::system::error_code &error, std::list<std::vector<uint8_t> >::iterator itr)
 {
+	std::cout << "Connection::HandleSend()" << std::endl;
 	if(error || HasError() || m_hive->HasStopped())
+	{
+		std::cout << "Connection::HandleSend() has error" << std::endl;
 		StartError(error);
+	}
 	else
 	{
 		OnSend(*itr);
