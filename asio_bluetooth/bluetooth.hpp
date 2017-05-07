@@ -16,12 +16,14 @@
 #include <boost/asio/basic_stream_socket.hpp>
 #include <boost/asio/detail/socket_option.hpp>
 #include <boost/asio/detail/socket_types.hpp>
+// Bluetooth endpoint implementation
+#include "basic_endpoint.hpp"
 
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
 
 namespace boost {
-
+namespace asio {
 namespace bluetooth {
 
 /**
@@ -36,7 +38,7 @@ public:
   explicit bluetooth(int family)
     : family_(family)
   {
-    
+
   }
 
 
@@ -81,7 +83,7 @@ private:
 };
 
 } // namespace bluetooth
-
+} // namespace asio
 } // namespace boost
 
 #include <boost/asio/detail/pop_options.hpp>
