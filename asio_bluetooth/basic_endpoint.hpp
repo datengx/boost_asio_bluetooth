@@ -116,6 +116,18 @@ private:
 
 };
 
+/// Output an endpoint as a string
+template <typename Elem, typename Traits, typename Procotol>
+std::basic_ostream<Elem, Traits>& operator<<(
+  std::basic_ostream<Elem, Traits>& os,
+  const basic_endpoint<Procotol>& endpoint)
+{
+  os << "[ADD endpoint OSTREAM IMPLEMENTATION]";
+  return os;
+}
+
+
+
 } // namespace bluetooth
 } // namespace asio
 } // namespace boost

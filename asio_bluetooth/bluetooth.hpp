@@ -35,12 +35,9 @@ class bluetooth
 {
 public:
   // Construct with a specific family
-  explicit bluetooth(int family)
-    : family_(family)
+  explicit bluetooth()
   {
-
   }
-
 
   // Obtain the type of the protocol, corresponding to the type argument
   // of POSIX socket()
@@ -62,24 +59,23 @@ public:
   // domain argument of POSIX socket()
   int family() const
   {
-    return family_;
+    return AF_BLUETOOTH;
   }
 
-  friend bool operator==(const bluetooth& p1, const bluetooth& p2)
-  {
-    return p1.family_ == p2.family_;
-  }
+  // The Bluetooth endpoint type
+  typedef basic_endpoint<bluetooth> endpoint;
 
-  friend bool operator!=(const bluetooth& p1, const bluetooth& p2)
-  {
-    return p1.family_ != p2.family_;
-  }
+  // The Bluetooth socket type.
+  typedef basic_stream_socket<bluetooth> socket;
+
+  // The Bluetooth acceptor type
+  typedef basic_socket_acceptor<bluetooth> acceptor;
+
+#if !defined(BOOST_ASIO_NO_IOSTREAM)
+  typedef basic_socket_iostream<bluetooth> iostream;
+#endif // !defined(BOOST_ASIO_NO_IOSTREAM)
 
 
-private:
-
-
-  int family_;
 };
 
 } // namespace bluetooth
