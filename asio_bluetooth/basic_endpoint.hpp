@@ -26,16 +26,93 @@ public:
   // Protocol type associated with the endpoint
   typedef Protocol protocol_type;
 
+  typedef boost::asio::detail::socket_addr_type data_type;
+
   basic_endpoint()
+    : impl_()
   {
-
   }
 
-  basic_endpoint(const char* mac_addr)
+  basic_endpoint(const char* mac_addr, uint8_t channel)
+    : impl_(mac_addr, channel)
   {
-    
   }
 
+  basic_endpoint(const std::string& mac_addr, uint8_t channel)
+    : impl_(mac_addr, channel)
+  {
+  }
+
+  // Copy Constructor
+  basic_endpoint(const basic_endpoint& other)
+    : impl_(other.impl_)
+  {
+  }
+
+#if defined(BOOST_ASIO_HAS_MOVE)
+  /// Move constructor
+  basic_endpoint(basic_endpoint&& other)
+  {
+    impl_ = other.impl_;
+    return *this;
+  }
+#endif // defined(BOOST_ASIO_HAS_MOVE)
+
+  /// Assign from another endpoint
+  basic_endpoint& operator=(const basic_endpoint& other)
+  {
+    impl_ = other.impl_;
+    return *this;
+  }
+
+#if defined(BOOST_ASIO_HAS_MOVE)
+  /// Move-assign
+  basic_endpoint& operator=(basic_endpoint&& other)
+  {
+    impl_ = other.impl_;
+    return *this;
+  }
+#endif // defined(BOOST_ASIO_HAS_MOVE)
+
+  // The protocol associated with the endpoint
+  protocol_type protocol() const
+  {
+    return protocol_type();
+  }
+
+  // Get the underlying endpoint in the native type
+  data_type* data()
+  {
+    return impl_.data();
+  }
+
+  // Get the underlying endpoint in the native type
+  const data_type* data() const
+  {
+    return impl_.data();
+  }
+
+  // Get the underlying size of the endpoint in the native type
+  std::size_t size() const
+  {
+    return impl_.size();
+  }
+
+  // Set the underlying size of the endpoint in the native type
+  void resize(std::size_t new_size)
+  {
+    impl_.resize(new_size);
+  }
+
+  // Get the capacity of the endpoint in the native type
+  std::size_t capacity() const
+  {
+    return impl_.capacity()
+  }
+
+private:
+  // underlying bluetooth endpoint
+  boost::asio::bluetooth::detail::endpoint impl_;
 
 };
 
