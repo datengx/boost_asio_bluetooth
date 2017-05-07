@@ -1,7 +1,7 @@
 //
 // bluetooth.hpp
-//
-//
+// author: Da Teng
+// email: dan0702@g.ucla.edu
 //
 //
 

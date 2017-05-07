@@ -1,7 +1,7 @@
 //
 //  asio_bluetooth/detail/endpoint.hpp
-//
-//
+//  author: Da Teng
+//  email: dan0702@g.ucla.edu
 //
 
 
@@ -42,6 +42,8 @@ public:
     data_.bt.rc_family = AF_BLUETOOTH;
     data_.bt.rc_bdaddr = *BDADDR_ANY;
     data_.bt.rc_channel = (uint8_t) 1;
+    // TODO can we figure out the BT mac of the local host?
+    mac_ = "[BDADDR_ANY]";
   }
 
   // Construct endpoint using bt MAC address and channel number
@@ -53,6 +55,8 @@ public:
     memcpy(addr, mac_addr, 18);
     str2ba( addr, &data_.bt.rc_bdaddr );
     data_.bt.rc_channel = (uint8_t) channel;
+
+    mac_ = std::string(mac_addr);
   }
 
   // Constructor using std::string
@@ -65,6 +69,8 @@ public:
     addr[17] = 0;
     str2ba( addr, &data_.bt.rc_bdaddr );
     data_.bt.rc_channel = (uint8_t) channel;
+
+    mac_ = mac_addr;
   }
 
   // Copy Constructor
@@ -114,6 +120,19 @@ public:
     return sizeof(boost::asio::detail::sockaddr_bt_type);
   }
 
+  // Get Bluetooth MAC address
+  std::string address() const
+  {
+    // TODO: convert directly from the address structure
+    return mac_;
+  }
+
+  // Get the Bluetooth channel
+  uint8_t channel() const
+  {
+    return (uint8_t) data_.bt.rc_channel;
+  }
+
 private:
   union data_union
   {
@@ -123,6 +142,7 @@ private:
     boost::asio::detail::sockaddr_bt_type bt;
   } data_;
 
+  std::string mac_;
 };
 
 

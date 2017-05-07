@@ -1,7 +1,7 @@
 //
 // asio_bluetooth/basic_endpoint.hpp
-//
-//
+// author: Da Teng
+// email: dan0702@g.ucla.edu
 //
 
 #ifndef BOOST_ASIO_BLUETOOTH_BASIC_ENDPOINT_HPP
@@ -107,6 +107,18 @@ public:
   std::size_t capacity() const
   {
     return impl_.capacity();
+  }
+
+  // Get the MAC address
+  std::string address() const
+  {
+    return impl_.address();
+  }
+
+  // Get the Bluetooth channel
+  uint8_t channel() const
+  {
+    return impl_.channel();
   }
 
 private:

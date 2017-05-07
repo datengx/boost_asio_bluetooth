@@ -1,3 +1,9 @@
+//
+//  asio_bluetooth/misc.hpp
+//  author: Da Teng
+//  email: dan0702@g.ucla.edu
+//
+
 #ifndef BOOST_ASIO_BLUETOOTH_MISC_HPP
 #define BOOST_ASIO_BLUETOOTH_MISC_HPP
 

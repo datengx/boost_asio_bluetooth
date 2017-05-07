@@ -1,4 +1,4 @@
-TARGETS=connectAsync serverAsync
+TARGETS=connectAsync serverAsync echoserver echoclient
 
 INC=$(shell pkg-config --cflags boost) \
 		-I/asio_bluetooth \
@@ -66,3 +66,11 @@ connectAsync:
 serverAsync:
 		g++ -Wall -fpermissive -std=c++14 $(INC) serverAsync.cpp -o serverAsync $(SIMPLE_LIBS)
 		mv $@ ./bin
+
+echoserver:
+	g++ -Wall -fpermissive -std=c++14 $(INC) wrapper.cpp echoserver.cpp -o echoserver $(SIMPLE_LIBS)
+	mv $@ ./bin
+
+echoclient:
+	g++ -Wall -fpermissive -std=c++14 $(INC) wrapper.cpp echoclient.cpp -o echoclient $(SIMPLE_LIBS)
+	mv $@ ./bin
