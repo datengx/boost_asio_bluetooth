@@ -134,7 +134,7 @@ int main(void) {
   boost::shared_ptr<MyConnection> connection(new MyConnection(hive));
   acceptor->Accept(connection);
 
-  while(!getch()) {
+  while(1) {
     hive->Poll();
     boost::this_thread::sleep( boost::posix_time::seconds(1) );
   }

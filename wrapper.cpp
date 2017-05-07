@@ -62,7 +62,7 @@ void Hive::Reset()
 
 // Acceptor constructor
 Acceptor::Acceptor(boost::shared_ptr<Hive> hive)
-: m_hive(hive), m_acceptor(hive->GetService()), m_io_strand(hive->GetService()), m_timer(hive->GetService()), m_timer_interval(1000), m_error_state(0)
+: m_hive(hive), m_acceptor(hive->GetService()), m_io_strand(hive->GetService()), m_timer(hive->GetService()), m_timer_interval(5000), m_error_state(0)
 {
 }
 
@@ -196,7 +196,7 @@ bool Acceptor::HasError()
 
 // Connection constructor
 Connection::Connection(boost::shared_ptr<Hive> hive)
-: m_hive(hive), m_socket(hive->GetService()), m_io_strand(hive->GetService()), m_timer(hive->GetService()), m_receive_buffer_size(4096), m_timer_interval(1000), m_error_state(0)
+: m_hive(hive), m_socket(hive->GetService()), m_io_strand(hive->GetService()), m_timer(hive->GetService()), m_receive_buffer_size(4096), m_timer_interval(5000), m_error_state(0)
 {
 }
 
