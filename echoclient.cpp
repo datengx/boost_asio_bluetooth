@@ -103,6 +103,7 @@ int main(void) {
   boost::shared_ptr<Hive> hive(new Hive());
 
   boost::shared_ptr<MyConnection> connection(new MyConnection(hive));
+  // specify the mac address here
   connection->Connect("94:39:E5:8E:5A:A2", 13);
 
   while(1) {
