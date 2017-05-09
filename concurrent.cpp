@@ -17,6 +17,7 @@ void Print2() {
   }
 }
 
+
 int main(void) {
   boost::thread_group threads;
   // create two threads of work
