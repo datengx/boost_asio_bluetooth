@@ -9,7 +9,6 @@
 boost::mutex global_stream_lock;
 
 
-
 /* reads from keypress, doesn't echo */
 int getch(void)
 {
