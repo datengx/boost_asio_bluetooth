@@ -109,6 +109,22 @@ public:
     return sizeof(boost::asio::detail::sockaddr_bt_type);
   }
 
+  friend bool operator==(const endpoint& e1, const endpoint& e2)
+  {
+    if (e1.address() != e2.address()) {
+      return false;
+    }
+    if (e1.channel() != e1.channel()) {
+      return false;
+    }
+    return true;
+  }
+
+  friend bool operator<(const endpoint& e1, const endpoint& e2)
+  {
+    return e1.address() < e2.address();
+  }
+  
   // Set the underlying size of the endpoint in the native type
   void resize(std::size_t new_size)
   {
