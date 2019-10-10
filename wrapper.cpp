@@ -401,10 +401,18 @@ boost::asio::bluetooth::bluetooth::socket &Connection::GetSocket()
 }
 
 // Connection::GetStrand definition
+#if BOOST_ASIO_VERSION >= 101200 // Boost 1.66+
+boost::asio::io_context::strand &Connection::GetStrand()
+{
+    return m_io_strand;
+}
+#else
 boost::asio::strand &Connection::GetStrand()
 {
-	return m_io_strand;
+    return m_io_strand;
+    return m_io_strand;
 }
+#endif
 
 // Connection::GetHive definition
 boost::shared_ptr<Hive> Connection::GetHive()
