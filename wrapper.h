@@ -67,7 +67,11 @@ class Acceptor : public boost::enable_shared_from_this<Acceptor>
 private:
 	boost::shared_ptr< Hive > m_hive;
 	boost::asio::bluetooth::bluetooth::acceptor m_acceptor;
-	boost::asio::strand m_io_strand;
+#if BOOST_ASIO_VERSION >= 101200 // Boost 1.66+
+    boost::asio::io_context::strand m_io_strand;
+#else
+    boost::asio::strand m_io_strand;
+#endif
 	boost::asio::deadline_timer m_timer;
 	boost::posix_time::ptime m_last_time;
 	boost::int32_t m_timer_interval;
@@ -110,7 +114,11 @@ public:
 	boost::asio::bluetooth::bluetooth::acceptor &GetAcceptor();
 
 	// Returns the strand object.
-	boost::asio::strand &GetStrand();
+#if BOOST_ASIO_VERSION >= 101200 // Boost 1.66+
+    boost::asio::io_context::strand &GetStrand();
+#else
+    boost::asio::strand &GetStrand();
+#endif
 
 	// Sets the timer interval of the object. The interval is changed after
 	// the next update is called. The default value is 1000 ms.
@@ -150,7 +158,11 @@ class Connection : public boost::enable_shared_from_this<Connection>
 private:
 	boost::shared_ptr<Hive> m_hive;
 	boost::asio::bluetooth::bluetooth::socket m_socket;
-	boost::asio::strand m_io_strand;
+#if BOOST_ASIO_VERSION >= 101200 // Boost 1.66+
+    boost::asio::io_context::strand m_io_strand;
+#else
+    boost::asio::strand m_io_strand;
+#endif
 	boost::asio::deadline_timer m_timer;
 	boost::posix_time::ptime m_last_time;
 	std::vector<boost::uint8_t> m_recv_buffer;
@@ -208,7 +220,11 @@ public:
 	boost::asio::bluetooth::bluetooth::socket &GetSocket();
 
 	// Returns the strand object.
-	boost::asio::strand &GetStrand();
+#if BOOST_ASIO_VERSION >= 101200 // Boost 1.66+
+    boost::asio::io_context::strand &GetStrand();
+#else
+    boost::asio::strand &GetStrand();
+#endif
 
 	// Sets the application specific receive buffer size used. For stream
 	// based protocols such as HTTP, you want this to be pretty large, like

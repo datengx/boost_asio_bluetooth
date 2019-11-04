@@ -35,7 +35,7 @@ public:
     : data_()
   {
     data_.bt.rc_family = AF_BLUETOOTH;
-    data_.bt.rc_bdaddr = *BDADDR_ANY;
+    data_.bt.rc_bdaddr = (bdaddr_t) { 0 };
     data_.bt.rc_channel = (uint8_t) 1;
     // TODO can we figure out the BT mac of the local host?
     mac_ = "[BDADDR_ANY]";
@@ -45,7 +45,7 @@ public:
     : data_()
   {
     data_.bt.rc_family = AF_BLUETOOTH;
-    data_.bt.rc_bdaddr = *BDADDR_ANY;
+    data_.bt.rc_bdaddr = (bdaddr_t) { 0 };
     data_.bt.rc_channel = (uint8_t) channel;
     // TODO can we figure out the BT mac of the local host?
     mac_ = "[BDADDR_ANY]";
